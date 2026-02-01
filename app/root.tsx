@@ -8,6 +8,7 @@ import {
 } from "react-router";
 
 import type { Route } from "./+types/root";
+import { Logo } from "./components/Logo";
 import "./app.css";
 
 export const links: Route.LinksFunction = () => [
@@ -42,7 +43,16 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
-  return <Outlet />;
+  return (
+    <div className="min-h-screen bg-white py-8 px-4 flex flex-col">
+      <div className="max-w-6xl w-full mx-auto flex-1 flex flex-col">
+        <Outlet />
+        <div className="mt-auto pt-8">
+          <Logo />
+        </div>
+      </div>
+    </div>
+  );
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
