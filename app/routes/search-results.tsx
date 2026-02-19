@@ -1,7 +1,9 @@
+import { useEffect } from "react";
 import type { Route } from "./+types/search-results";
 import { NavLink, Link, redirect } from "react-router";
 import { Search } from "../components/Search";
 import { getApiConfig, createApiUrl } from "../lib/api-client";
+import { addRecentSearch } from "../lib/recent-searches";
 import { ErrorBoundary as ErrorBoundaryComponent } from "../components/ErrorBoundary";
 import { LoadingSkeleton } from "../components/LoadingSkeleton";
 
@@ -118,6 +120,10 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
 export default function SearchResults({ loaderData }: Route.ComponentProps) {
   const { query, page, totalResults, totalPages, apiResults } = loaderData;
   
+  useEffect(() => {
+    if (query) addRecentSearch(query);
+  }, [query]);
+
   const companies = apiResults?.items || [];
   
   const formatNumber = (num: number) => {
