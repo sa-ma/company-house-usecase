@@ -6,6 +6,8 @@ import { getApiConfig, createApiUrl } from "../lib/api-client";
 import { addRecentSearch } from "../lib/recent-searches";
 import { ErrorBoundary as ErrorBoundaryComponent } from "../components/ErrorBoundary";
 import { LoadingSkeleton } from "../components/LoadingSkeleton";
+import { ExportButton } from "../components/ExportButton";
+import { translateSicCodes } from "../lib/company-data";
 
 export async function loader({ request }: Route.LoaderArgs) {
   const url = new URL(request.url);
@@ -190,6 +192,11 @@ export default function SearchResults({ loaderData }: Route.ComponentProps) {
             
             {companies.length > 0 ? (
               <>
+                <ExportButton
+                  companies={companies}
+                  query={query}
+                  totalResults={totalResults}
+                />
                 <div className="space-y-4">
                   {companies.map((company: any, index: number) => (
                     <Link
